@@ -21,7 +21,6 @@ Synthetic matching techniques applied for event studies in finance are not commo
 We provide an example of the synthetic matching technique, which we denote as synthetic portfolio method (as special case of synthetic control methods) that has important potential in financial event studies.
 
 ```
-{
 #Libraries
 import pandas as pd
 import numpy as np
@@ -33,30 +32,23 @@ from sklearn import linear_model
 from sklearn.metrics import mean_squared_error
 from scipy import stats
 from IPython.display import Image
-}
 ```
 
 ## 3. Read data and obtain data for estimation window. 
 
 ```
-{
 #read event timeline
 filepath="DatesE10107.csv"
 edate=pd.read_csv(filepath,sep=",",parse_dates=[1],index_col=[0],header=None, names=["event","date"])
 edate
-}
 ```
 ```
-{
 Image("etimeline.png")
-}
 ```
 ```
-{
 # Load return data
 with open('E10107.pickle', 'rb') as file:
     fdata = pickle.load(file)
-}
 ```
 ## 4. Regularized synthetic porfolio. 
 Simple extension of Synthetic Control Method is to perform index tracking, that is we estimate $w^{*}$ by minimizing the tracking error in the estimation window $t \in [T_{1},T_{3}]$ and then we predict the synthetic portfolio in the event window $t \in [T_{4}, T_{5})$.
@@ -90,16 +82,13 @@ Naive synthetic portfolio (equal weights, no estimation)
 \end{equation*}
 
 ```
-{
 #estimators sklearn
 reg = linear_model.LinearRegression() #OLS
 slreg = linear_model.Lasso(alpha=0.0001,fit_intercept=False, max_iter=1000,positive=True) # LASSO
 enreg= linear_model.ElasticNet(alpha=0.0001, l1_ratio=0.5, fit_intercept=False,positive=True) #Enet
-}
 ```    
 
 ```
-{
 def rsynth(data,date):
     #Train
     train=data.loc[:date.values[1][0],:]
@@ -221,50 +210,38 @@ def rsynth(data,date):
     wpo=wpo.iloc[np.nonzero(lsw)]
     out=(testM,eventM,AR,allM,wpo,CAR)
     return out
-}
 ```    
 ## 5. Results: Short term effects on stock retunrs of the potential acquirer/bidder (Microsoft Corp) 
 For the application the number of assets available to estimate the synthetic porforlio are $2947$ and the number of observations is $246$. Therefore we use regularized synthetic porfolio, in particular the Lasso version which perfom best in simulation studies.
 
 ```
-{
 res=rsynth(fdata,edate)
-}
 ```    
 
 ```
-{
 #Cummulative abnormal returns for a 10 day window
 res[0]
-}
 ```    
 
 ```
-{
 #read CRSP header file
 filepath="header_CRSP.csv"
 hcrsp=pd.read_csv(filepath,sep=",",index_col=[0], usecols=['PERMNO','HCOMNAM','HTSYMBOL'])
-}
 ```    
 
 ```
-{
 #Weigths from LASSO
 lweights=res[4]
 nweights=hcrsp[hcrsp.index.isin(lweights.index)]
 fweights=nweights.assign(weights=lweights.values)
 fweights
-}
 ```    
 
 ```
-{
 import matplotlib.pyplot as plt
-}
 ```    
 
 ```
-{
 #Plot the weights with bar plot
 plt.figure(figsize=(14,10))
 plt.bar(range(lweights.shape[0]), lweights.values)
@@ -273,18 +250,14 @@ plt.ylabel('weight %')
 plt.title('Synthetic Portfolio weights')
 #plt.xticks(lweights.index.tolist())
 plt.show()
-}
 ```    
 
 ```
-{
 import seaborn as sns
 sns.set_style("white")
-}
 ```    
 
 ```
-{
 #Line graph of observed, mkt model fitted and synthetic returns
 dfp=res[3]
 f, ax = plt.subplots(1, 1)
@@ -306,11 +279,9 @@ plt.ylabel('daily returns')
 plt.title('Estimation and event window')
 plt.gcf().autofmt_xdate()
 plt.show()
-}
 ```    
 
 ```
-{
 ar=res[5]
 from matplotlib import dates
 N = ar.shape[0]
@@ -332,7 +303,6 @@ arp.legend( (rects1[0], rects2[0]), ('mkt_model', 'synthetic_lasso'), loc='lower
 #plt.gcf().autofmt_xdate()
 plt.xticks(rotation=90)
 plt.show()
-}
 ```    
 
 ## 6. Conclusions
