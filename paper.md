@@ -8,7 +8,7 @@ On February 1, 2008, Microsoft unveiled a hostile offer for Yahoo Inc (YHOO) of 
 Read more: [How Mergers and Acquisitions Can Affect A Company, Investopedia]( http://www.investopedia.com/articles/investing/102914/how-mergers-and-acquisitions-can-affect-company.asp#ixzz4sZ1VgjjF)
 
 ## 2. Event studies, potential outcomes and synthetic portfolio
-Event studies are a popular approach in empirical finance since the sixties (Corrado, 2011). The most common approach to estimate expected "normal" returns is the market model. 
+Event studies are a popular approach in empirical finance since the sixties [(Corrado, 2011)](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-629X.2010.00375.x). The most common approach to estimate expected "normal" returns is the market model. 
 
 Causal inference has attracted attention accross many disciplines (computer sciences, social an biomedial sciences). In empirical economics these tecniques have created a credibility revolution [(Angrist and Pischke,2010)](https://www.aeaweb.org/articles?id=10.1257/jep.24.2.3). Empirical research questions beyond description and association.
 
